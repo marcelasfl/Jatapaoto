@@ -1,24 +1,22 @@
 package com.example.geradorus.model;
 
-
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
 
 @Entity
+@Table
 @Data
-public class TipoTarefa {
+public class Projeto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String descricao;
+    private String nome;
 
-    @OneToMany(mappedBy="tipoTarefa")
-    private List<Tarefa> tarefa;
+    @OneToMany(mappedBy="projeto")
+    private List<Epico> epico;
 
-    @OneToMany(mappedBy="tipoTarefa")
-    private List<TipoUS> tipoUS;
 
 }

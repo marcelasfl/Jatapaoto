@@ -17,13 +17,21 @@ public class Epico {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String nome; //Nome do projeto
+    private String titulo; //Nome do projeto
 
-    private String texto; //Epico Escrito
+    private String descricao; //Epico Escrito
+
+    private String relevancia; //Epico Escrito
+
+    private String categoria; //Epico Escrito
 
     @ManyToOne
     @JoinColumn(name = "tipo_epico_id")
     private TipoEpico tipoEpico;
+
+    @ManyToOne
+    @JoinColumn(name = "projeto_id")
+    private Projeto projeto;
 
     @OneToOne(mappedBy="epico")
     private HistoriaUsuario historiaUsuario;

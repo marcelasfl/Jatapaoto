@@ -12,8 +12,17 @@ public class Tarefa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String nome;
+    private String titulo;
 
+    private String descricao;
+
+    @ManyToOne
+    @JoinColumn(name = "tipo_tarefa_id")
+    private TipoTarefa tipoTarefa;
+
+    @ManyToOne
+    @JoinColumn(name = "us_id")
+    private HistoriaUsuario historiaUsuario;
     //@OneToMany(mappedBy="historiaUsuario")
     //private HistoriaUsuario historiaUsuario;
 

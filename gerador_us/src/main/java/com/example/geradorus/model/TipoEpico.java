@@ -12,10 +12,17 @@ public class TipoEpico {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String nome;
+    private String descricao;
 
     @OneToMany(mappedBy="tipoEpico")
     private List<Epico> epico;
+
+    @OneToMany
+    @JoinColumn(name = "tipo_us_id")
+    private List<TipoUS> tipoUS;
+//    @OneToMany(mappedBy="tipous")
+//    private Set<Item> items;
+
 
 
     //@OneToMany(mappedBy="tipoUS")
