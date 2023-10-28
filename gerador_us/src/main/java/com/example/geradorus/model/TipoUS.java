@@ -1,6 +1,5 @@
 package com.example.geradorus.model;
 
-
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -19,10 +18,5 @@ public class TipoUS {
 
     @ManyToOne
     private TipoEpico tipoEpico;
-
-
-
-    //@OneToMany(mappedBy="tipoTarefa")
-   // private TipoTarefa tipoTarefa;
 
 }
