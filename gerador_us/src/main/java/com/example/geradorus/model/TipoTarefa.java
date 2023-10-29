@@ -1,9 +1,7 @@
 package com.example.geradorus.model;
 
-
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.util.List;
 
 @Entity

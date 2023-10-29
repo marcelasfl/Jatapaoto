@@ -1,29 +1,23 @@
 package com.example.geradorus.model;
-
 import jakarta.persistence.*;
 import lombok.*;
-
-//import java.util.List;
-
-import java.util.Set;
 
 @Entity
 @Table
 @Data
-
 public class Epico {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String titulo; //Nome do projeto
+    private String titulo;
 
-    private String descricao; //Epico Escrito
+    private String descricao;
 
-    private String relevancia; //Epico Escrito
+    private String relevancia; //pode ser do tipo int? pode ser enum?
 
-    private String categoria; //Epico Escrito
+    private String categoria; //pode ser enum?
 
     @ManyToOne
     @JoinColumn(name = "tipo_epico_id")
@@ -35,6 +29,5 @@ public class Epico {
 
     @OneToOne(mappedBy="epico")
     private HistoriaUsuario historiaUsuario;
-
 
 }

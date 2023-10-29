@@ -1,6 +1,5 @@
 package com.example.geradorus.model;
 
-
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -8,6 +7,7 @@ import lombok.Data;
 @Table
 @Data
 public class Tarefa {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -23,8 +23,5 @@ public class Tarefa {
     @ManyToOne
     @JoinColumn(name = "us_id")
     private HistoriaUsuario historiaUsuario;
-    //@OneToMany(mappedBy="historiaUsuario")
-    //private HistoriaUsuario historiaUsuario;
-
 
 }

@@ -2,13 +2,13 @@ package com.example.geradorus.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.util.List;
 
 @Entity
 @Table
 @Data
 public class HistoriaUsuario {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -27,6 +27,5 @@ public class HistoriaUsuario {
 
     @OneToMany(mappedBy="historiaUsuario")
     private List<Tarefa> tarefa;
-
 
 }
