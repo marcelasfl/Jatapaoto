@@ -3,6 +3,8 @@ package com.example.geradorus.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Data
 public class TipoUS {
@@ -12,11 +14,11 @@ public class TipoUS {
 
     private String descricao;
 
-    @ManyToOne
-    @JoinColumn(name = "tipo_tarefa_id")
-    private TipoTarefa tipoTarefa;
+    @OneToMany(mappedBy="tipoUS")
+    private List<TipoTarefa> tipoTarefa;
 
     @ManyToOne
+    @JoinColumn(name = "tipo_epico_id")
     private TipoEpico tipoEpico;
 
 }

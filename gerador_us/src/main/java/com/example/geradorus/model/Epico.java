@@ -2,6 +2,8 @@ package com.example.geradorus.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table
 @Data
@@ -27,7 +29,7 @@ public class Epico {
     @JoinColumn(name = "projeto_id")
     private Projeto projeto;
 
-    @OneToOne(mappedBy="epico")
-    private HistoriaUsuario historiaUsuario;
+    @OneToMany(mappedBy="epico")
+    private List<HistoriaUsuario> historiaUsuario;
 
 }

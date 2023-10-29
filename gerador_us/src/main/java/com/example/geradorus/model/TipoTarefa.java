@@ -16,7 +16,8 @@ public class TipoTarefa {
     @OneToMany(mappedBy="tipoTarefa")
     private List<Tarefa> tarefa;
 
-    @OneToMany(mappedBy="tipoTarefa")
-    private List<TipoUS> tipoUS;
+    @ManyToOne
+    @JoinColumn(name = "us_id")
+    private TipoUS tipoUS;
 
 }

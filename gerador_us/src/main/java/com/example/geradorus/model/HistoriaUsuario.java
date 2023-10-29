@@ -21,8 +21,8 @@ public class HistoriaUsuario {
 
     private String categoria;
 
-    @OneToOne
-    @JoinColumn(name = "epico_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "epico_id")
     private Epico epico;
 
     @OneToMany(mappedBy="historiaUsuario")

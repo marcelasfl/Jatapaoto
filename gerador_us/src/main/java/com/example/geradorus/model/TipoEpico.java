@@ -16,8 +16,11 @@ public class TipoEpico {
     @OneToMany(mappedBy="tipoEpico")
     private List<Epico> epico;
 
-    @OneToMany
-    @JoinColumn(name = "tipo_us_id")
+    @OneToMany(mappedBy="tipoEpico")
     private List<TipoUS> tipoUS;
+
+//    @OneToMany
+//    @JoinColumn(name = "tipo_us_id")
+//    private List<TipoUS> tipoUS;
 
 }
