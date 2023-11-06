@@ -1,8 +1,10 @@
 package com.example.geradorus.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.Data;
-import java.util.List;
+
 
 @Entity
 @Table
@@ -25,7 +27,9 @@ public class HistoriaUsuario {
     @JoinColumn(name = "epico_id")
     private Epico epico;
 
-    @OneToMany(mappedBy="historiaUsuario")
-    private List<Tarefa> tarefa;
-
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tipo_tarefa_id")
+    private TipoTarefa tipoTarefa;
+    
 }
