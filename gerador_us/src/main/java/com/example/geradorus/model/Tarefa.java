@@ -16,12 +16,10 @@ public class Tarefa {
 
     private String descricao;
 
-    @ManyToOne
-    @JoinColumn(name = "tipo_tarefa_id")
-    private TipoTarefa tipoTarefa;
+    //@ManyToOne
+    //@JqoinColumn(name = "tipo_tarefa_id")
+    //private TipoTarefa tipoTarefa;
 
-    @ManyToOne
-    @JoinColumn(name = "us_id")
-    private HistoriaUsuario historiaUsuario;
+    
 
 }
