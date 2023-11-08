@@ -1,21 +1,18 @@
 package com.example.geradorus.controller;
 
+
+import com.example.geradorus.dto.HistoriaUsuarioInputDTO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-//import com.sun.tools.javac.util.StringUtils;
+
 import com.example.geradorus.dto.TipoUSInputDTO;
-import jakarta.validation.Valid;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 import com.example.geradorus.dto.HistoriaUsuarioInputDTO;
 
 import com.example.geradorus.codes.StatusCodes;
 import com.example.geradorus.dto.GerarHistoriaUsuarioDTO;
+
 import com.example.geradorus.model.Epico;
 import com.example.geradorus.model.HistoriaUsuario;
 import com.example.geradorus.model.Tarefa;
@@ -25,6 +22,15 @@ import com.example.geradorus.repository.EpicoRepository;
 import com.example.geradorus.repository.HistoriaUsuarioRepository;
 import com.example.geradorus.repository.TarefaRepository;
 import com.example.geradorus.repository.TipoUSRepository;
+
+
+import jakarta.validation.Valid;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 
 
 
@@ -113,11 +119,33 @@ public class HistoriaUsuarioController {
         BeanUtils.copyProperties(historiaUsuarioInputDTO, hu); //Converterndo o dto em model
         return ResponseEntity.status(HttpStatus.OK).body(historiaUsuarioRepository.save(hus));
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getHUById(@PathVariable(value="id") long id){
+        Optional<HistoriaUsuario> hu = historiaUsuarioRepository.findById(id);
+        if(hu.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(StatusCodes.US_NOT_FOUND.getCode());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(hu.get());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateHU(@PathVariable(value="id") long id,
+                                           @RequestBody @Valid HistoriaUsuarioInputDTO historiaUsuarioInputDTO) {
+        Optional<HistoriaUsuario> hu = historiaUsuarioRepository.findById(id);
+        if(hu.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(StatusCodes.US_NOT_FOUND.getCode()); //Não encontra e retorna o HttpStatus
+        }
+        var hus = hu.get();
+        BeanUtils.copyProperties(historiaUsuarioInputDTO, hu); //Converterndo o dto em model
+        return ResponseEntity.status(HttpStatus.OK).body(historiaUsuarioRepository.save(hus));
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteHU(@PathVariable(value="id") long id) {
         Optional<HistoriaUsuario> hu = historiaUsuarioRepository.findById(id);
+
         if(hu.isEmpty()) {
+
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(StatusCodes.US_NOT_FOUND.getCode());
         }
         historiaUsuarioRepository.delete(hu.get());
