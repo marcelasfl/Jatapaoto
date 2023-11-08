@@ -1,8 +1,14 @@
 package com.example.geradorus.model;
 
-import jakarta.persistence.*;
+import java.util.Set;
 import lombok.Data;
-import java.util.List;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -16,12 +22,12 @@ public class TipoTarefa {
     private String descricao;
 
 
-    //@ManyToOne
-    //@JoinColumn(name = "tipoUS_id") // Nome da coluna na tabela TipoTarefa que representa a chave estrangeira para TipoUS
-    //private TipoUS tipoUS;
+
 
     @OneToMany(mappedBy = "tipoTarefa")
-    @JsonIgnore
-    private List<HistoriaUsuario> historiaUsuario;
+    private Set<TipoUS> tipoHistoriaUsuarios;
 
+    @OneToOne
+    @JoinColumn(name = "tipo_us_id")
+    private TipoUS tipoUS;
 }
