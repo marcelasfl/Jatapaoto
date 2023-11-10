@@ -119,26 +119,6 @@ public class HistoriaUsuarioController {
         BeanUtils.copyProperties(historiaUsuarioInputDTO, hu); //Converterndo o dto em model
         return ResponseEntity.status(HttpStatus.OK).body(historiaUsuarioRepository.save(hus));
     }
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> getHUById(@PathVariable(value="id") long id){
-        Optional<HistoriaUsuario> hu = historiaUsuarioRepository.findById(id);
-        if(hu.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(StatusCodes.US_NOT_FOUND.getCode());
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(hu.get());
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> updateHU(@PathVariable(value="id") long id,
-                                           @RequestBody @Valid HistoriaUsuarioInputDTO historiaUsuarioInputDTO) {
-        Optional<HistoriaUsuario> hu = historiaUsuarioRepository.findById(id);
-        if(hu.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(StatusCodes.US_NOT_FOUND.getCode()); //Não encontra e retorna o HttpStatus
-        }
-        var hus = hu.get();
-        BeanUtils.copyProperties(historiaUsuarioInputDTO, hu); //Converterndo o dto em model
-        return ResponseEntity.status(HttpStatus.OK).body(historiaUsuarioRepository.save(hus));
-    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteHU(@PathVariable(value="id") long id) {
