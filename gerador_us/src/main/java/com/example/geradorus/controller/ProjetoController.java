@@ -15,13 +15,13 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/projetos")
+@RequestMapping("/api/projeto")
 public class ProjetoController {
     @Autowired
     ProjetoRepository projetoRepository;
 
     @PostMapping
-    public ResponseEntity<Object> createProject(@RequestBody @Valid ProjetoInputDTO projetoInputDTO) {
+    public ResponseEntity<Object> criarProjeto(@RequestBody @Valid ProjetoInputDTO projetoInputDTO) {
         var projeto = new Projeto();
         BeanUtils.copyProperties(projetoInputDTO, projeto);
 
@@ -29,12 +29,10 @@ public class ProjetoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Projeto>> getAllProjects() {
-        return ResponseEntity.status(HttpStatus.OK).body(projetoRepository.findAll());
-    }
+    public ResponseEntity<List<Projeto>> listarProjetos() {return ResponseEntity.status(HttpStatus.OK).body(projetoRepository.findAll());}
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getProjectById(@PathVariable int id) {
+    public ResponseEntity<Object> projetoPeloId(@PathVariable int id) {
         Optional<Projeto> projetoOptional = projetoRepository.findById((long) id);
 
         return projetoOptional.<ResponseEntity<Object>>map(projeto ->
@@ -43,18 +41,18 @@ public class ProjetoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteProject(@PathVariable int id) {
+    public ResponseEntity<Object> deletarProjeto(@PathVariable int id) {
         Optional<Projeto> projetoOptional = projetoRepository.findById((long) id);
-        if (projetoOptional.isEmpty()) {return ResponseEntity.status(HttpStatus.NOT_FOUND).body(StatusCodes.PROJECT_NOT_FOUND);}
+        if (projetoOptional.isEmpty()) {return ResponseEntity.status(HttpStatus.NOT_FOUND).body(StatusCodes.PROJECT_NOT_FOUND.getCode());}
         projetoRepository.deleteById((long) id);
 
         return ResponseEntity.status(HttpStatus.OK).body(StatusCodes.PROJECT_REMOVED.getCode());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateProject(@PathVariable int id, @RequestBody @Valid ProjetoInputDTO projetoInputDTO) {
+    public ResponseEntity<Object> atualizarProjeto(@PathVariable int id, @RequestBody @Valid ProjetoInputDTO projetoInputDTO) {
         Optional<Projeto> projetoOptional = projetoRepository.findById((long) id);
-        if (projetoOptional.isEmpty()) {return ResponseEntity.status(HttpStatus.NOT_FOUND).body(StatusCodes.PROJECT_NOT_FOUND);}
+        if (projetoOptional.isEmpty()) {return ResponseEntity.status(HttpStatus.NOT_FOUND).body(StatusCodes.PROJECT_NOT_FOUND.getCode());}
 
         var projeto = new Projeto();
         BeanUtils.copyProperties(projetoInputDTO, projeto);
