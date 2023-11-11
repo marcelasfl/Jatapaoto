@@ -23,6 +23,7 @@ public class EpicoController {
     public ResponseEntity<Object> createEpico(@RequestBody @Valid EpicoInputDTO epicoInputDTO){
         var epico = new Epico();
         BeanUtils.copyProperties(epicoInputDTO, epico);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(epicoRepository.save(epico));
     }
 
@@ -32,6 +33,7 @@ public class EpicoController {
     @GetMapping("/{id}")
     public ResponseEntity<Object> getEpicoById(@PathVariable int id){
         Optional<Epico> epicoOptional = epicoRepository.findById((long) id);
+
         return epicoOptional.<ResponseEntity<Object>>map(epico ->
                 ResponseEntity.status(HttpStatus.OK).body(epico)).orElseGet(() ->
                 ResponseEntity.status(HttpStatus.NOT_FOUND).body(StatusCodes.PROJECT_NOT_FOUND.getCode()));
@@ -42,6 +44,7 @@ public class EpicoController {
         Optional<Epico> epicoOptional = epicoRepository.findById((long) id);
         if(epicoOptional.isEmpty()){return ResponseEntity.status(HttpStatus.NOT_FOUND).body(StatusCodes.PROJECT_NOT_FOUND);}
         epicoRepository.deleteById((long) id);
+
         return ResponseEntity.status(HttpStatus.OK).body(StatusCodes.PROJECT_REMOVED.getCode());
     }
 

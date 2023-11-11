@@ -1,6 +1,7 @@
 package com.example.geradorus.model;
+
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 
 import java.util.List;
 
@@ -17,9 +18,9 @@ public class Epico {
 
     private String descricao;
 
-    private String relevancia; //pode ser do tipo int? pode ser enum?
+    private String relevancia;
 
-    private String categoria; //pode ser enum?
+    private String categoria;
 
     @ManyToOne
     @JoinColumn(name = "tipo_epico_id")
@@ -29,7 +30,7 @@ public class Epico {
     @JoinColumn(name = "projeto_id")
     private Projeto projeto;
 
-    @OneToMany(mappedBy="epico")
+    @OneToMany(mappedBy = "epico")
     private List<HistoriaUsuario> historiaUsuario;
 
 }

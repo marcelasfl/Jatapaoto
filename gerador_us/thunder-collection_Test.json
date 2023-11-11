@@ -1,0 +1,170 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "Test",
+    "dateExported": "2023-11-05T17:06:27.401Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "bb4eb9ab-b2b7-443b-9faf-964e578c4c6a",
+            "name": "Epico",
+            "containerId": "",
+            "created": "2023-11-05T14:33:50.939Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "c79dc53c-8891-46ec-b1b3-fbdb2a539e6e",
+            "name": "Tipo Tarefa",
+            "containerId": "",
+            "created": "2023-11-05T14:34:06.710Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "9f8dfa21-6833-4bfb-8223-1c876fe8f35d",
+            "name": "Tipo Hisotria Usuario",
+            "containerId": "",
+            "created": "2023-11-05T14:34:22.599Z",
+            "sortNum": 30000
+        },
+        {
+            "_id": "cc11082d-a115-4e34-b260-0db1e0578fa1",
+            "name": "Hisotria Usuario",
+            "containerId": "",
+            "created": "2023-11-05T14:45:16.098Z",
+            "sortNum": 40000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "403b3ba1-5737-41f9-9e09-5be7d1635ad4",
+            "colId": "e7d6b8b6-1b64-4fb7-a3bb-57845143def5",
+            "containerId": "9f8dfa21-6833-4bfb-8223-1c876fe8f35d",
+            "name": "Listar Tipo Historia de Usuário",
+            "url": "http://localhost:8080/api/tipoUS",
+            "method": "GET",
+            "sortNum": 5000,
+            "created": "2023-11-05T14:35:15.650Z",
+            "modified": "2023-11-05T14:35:35.260Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "aa57e013-247a-4dcf-8327-1c0ba9e29a32",
+            "colId": "e7d6b8b6-1b64-4fb7-a3bb-57845143def5",
+            "containerId": "cc11082d-a115-4e34-b260-0db1e0578fa1",
+            "name": "Listar Historia de Usuário",
+            "url": "http://localhost:8080/api/us",
+            "method": "GET",
+            "sortNum": 5000,
+            "created": "2023-11-05T14:45:16.098Z",
+            "modified": "2023-11-05T16:05:58.949Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "d4a7c770-3dc4-47fa-8dd8-5751da258752",
+            "colId": "e7d6b8b6-1b64-4fb7-a3bb-57845143def5",
+            "containerId": "9f8dfa21-6833-4bfb-8223-1c876fe8f35d",
+            "name": "Criar Tipo Historia de Usuário",
+            "url": "http://localhost:8080/api/tipoUS",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2023-11-05T06:14:26.446Z",
+            "modified": "2023-11-05T14:39:13.538Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"descricao\": \"CRIAR\", \n  \"tipoTarefaId\": 1\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "4b5a1cbc-bc77-4945-8aab-fbc437eb519d",
+            "colId": "e7d6b8b6-1b64-4fb7-a3bb-57845143def5",
+            "containerId": "c79dc53c-8891-46ec-b1b3-fbdb2a539e6e",
+            "name": "Listar Tipos Tarefa",
+            "url": "http://localhost:8080/api/tipotarefa",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-11-05T14:11:45.415Z",
+            "modified": "2023-11-05T14:34:53.588Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "36868648-8fdb-42e5-97e2-97acf37bddbd",
+            "colId": "e7d6b8b6-1b64-4fb7-a3bb-57845143def5",
+            "containerId": "cc11082d-a115-4e34-b260-0db1e0578fa1",
+            "name": "Gerar Historia de Usuário",
+            "url": "http://localhost:8080/api/us/gerar",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2023-11-05T14:45:16.099Z",
+            "modified": "2023-11-05T16:30:11.279Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"epicoId\": 1\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "4a9eb7db-c2ec-449c-aa09-f44b4dd77189",
+            "colId": "e7d6b8b6-1b64-4fb7-a3bb-57845143def5",
+            "containerId": "c79dc53c-8891-46ec-b1b3-fbdb2a539e6e",
+            "name": "Criar Tipo Tarefa",
+            "url": "http://localhost:8080/api/tipotarefa",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2023-11-05T06:16:53.569Z",
+            "modified": "2023-11-05T06:18:09.276Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"descricao\": \"Criar rota de inserção\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "97b4e6f1-50a8-4a8e-959a-9f8653bb890d",
+            "colId": "e7d6b8b6-1b64-4fb7-a3bb-57845143def5",
+            "containerId": "bb4eb9ab-b2b7-443b-9faf-964e578c4c6a",
+            "name": "Listar Epicos",
+            "url": "http://localhost:8080/api/epico",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2023-11-05T14:33:33.653Z",
+            "modified": "2023-11-05T14:34:44.474Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "899476b1-e656-49c2-b5db-00c8acb4fdf0",
+            "colId": "e7d6b8b6-1b64-4fb7-a3bb-57845143def5",
+            "containerId": "bb4eb9ab-b2b7-443b-9faf-964e578c4c6a",
+            "name": "Criar Epico",
+            "url": "http://localhost:8080/api/epico",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2023-11-05T06:07:14.556Z",
+            "modified": "2023-11-05T06:10:30.498Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"titulo\": \"Teste\",\n  \"descricao\": \"Eu como professor, desejo gerenciar um usuário\",\n  \"relevancia\": \"teste\",\n  \"categoria\": \"teste\"\n}",
+                "form": []
+            },
+            "tests": []
+        }
+    ]
+}

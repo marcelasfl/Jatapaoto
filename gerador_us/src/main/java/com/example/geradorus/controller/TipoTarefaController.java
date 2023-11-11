@@ -1,7 +1,7 @@
 package com.example.geradorus.controller;
 
 import com.example.geradorus.codes.StatusCodes;
-import com.example.geradorus.dto.TipoTarefaDTO;
+import com.example.geradorus.dto.TipoTarefaInputDTO;
 import com.example.geradorus.model.TipoTarefa;
 import com.example.geradorus.repository.TipoTarefaRepository;
 import jakarta.validation.Valid;
@@ -21,41 +21,49 @@ public class TipoTarefaController {
     TipoTarefaRepository tipoTarefaRepository;
 
     @PostMapping
-    public ResponseEntity<Object> createTipoTarefa(@RequestBody @Valid TipoTarefaDTO tipoTarefaDTO){
+    public ResponseEntity<Object> createTipoTarefa(@RequestBody @Valid TipoTarefaInputDTO tipoTarefaInputDTO) {
         var tipoTarefa = new TipoTarefa();
-        BeanUtils.copyProperties(tipoTarefaDTO, tipoTarefa);
+        BeanUtils.copyProperties(tipoTarefaInputDTO, tipoTarefa);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(tipoTarefaRepository.save(tipoTarefa));
     }
 
     @GetMapping
-    public ResponseEntity<List<TipoTarefa>> getAllTipoTarefa(){
+    public ResponseEntity<List<TipoTarefa>> getAllTipoTarefa() {
+
         return ResponseEntity.status(HttpStatus.OK).body(tipoTarefaRepository.findAll());
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getTipoTarefaById(@PathVariable int id){
+    public ResponseEntity<Object> getTipoTarefaById(@PathVariable int id) {
         Optional<TipoTarefa> tipoTarefaOptional = tipoTarefaRepository.findById((long) id);
+
         return tipoTarefaOptional.<ResponseEntity<Object>>map(tipoTarefa ->
                 ResponseEntity.status(HttpStatus.OK).body(tipoTarefa)).orElseGet(() ->
                 ResponseEntity.status(HttpStatus.NOT_FOUND).body(StatusCodes.PROJECT_NOT_FOUND.getCode()));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteTipoTarefa(@PathVariable int id){
+    public ResponseEntity<Object> deleteTipoTarefa(@PathVariable int id) {
         Optional<TipoTarefa> tipoTarefaOptional = tipoTarefaRepository.findById((long) id);
-        if(tipoTarefaOptional.isEmpty()){return ResponseEntity.status(HttpStatus.NOT_FOUND).body(StatusCodes.PROJECT_NOT_FOUND);}
+        if (tipoTarefaOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(StatusCodes.PROJECT_NOT_FOUND);
+        }
         tipoTarefaRepository.deleteById((long) id);
+
         return ResponseEntity.status(HttpStatus.OK).body(StatusCodes.PROJECT_REMOVED.getCode());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateTipoTarefa(@PathVariable int id, @RequestBody @Valid TipoTarefaDTO tipoTarefaDTO){
+    public ResponseEntity<Object> updateTipoTarefa(@PathVariable int id, @RequestBody @Valid TipoTarefaInputDTO tipoTarefaInputDTO) {
         Optional<TipoTarefa> tipoTarefaOptional = tipoTarefaRepository.findById((long) id);
-        if(tipoTarefaOptional.isEmpty()){return ResponseEntity.status(HttpStatus.NOT_FOUND).body(StatusCodes.PROJECT_NOT_FOUND);}
+        if (tipoTarefaOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(StatusCodes.PROJECT_NOT_FOUND);
+        }
 
         var tipoTarefa = new TipoTarefa();
-        BeanUtils.copyProperties(tipoTarefaDTO, tipoTarefa);
+        BeanUtils.copyProperties(tipoTarefaInputDTO, tipoTarefa);
         tipoTarefa.setId(tipoTarefaOptional.get().getId());
 
         return ResponseEntity.status(HttpStatus.OK).body(tipoTarefaRepository.save(tipoTarefa));

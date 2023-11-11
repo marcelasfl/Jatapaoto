@@ -15,11 +15,7 @@ public class Projeto {
 
     private String nome;
 
-    @OneToMany(mappedBy="projeto")
+    @OneToMany(mappedBy = "projeto")
     private List<Epico> epico;
-
-    //private List<HistoriaUsuario> historiaUsuario;
-
-    //private List<Tarefa> tarefa;
 
 }

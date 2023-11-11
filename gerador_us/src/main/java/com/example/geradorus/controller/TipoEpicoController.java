@@ -16,7 +16,6 @@ public class TipoEpicoController {
         return tipoEpicoRepository.findAll();
     }
 
-
     @GetMapping("/{id}")
     public TipoEpico getTipoEpico(@PathVariable Long id) {
         return tipoEpicoRepository.findById(id).get();
