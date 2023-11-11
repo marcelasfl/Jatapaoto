@@ -18,7 +18,7 @@ public class TipoUS {
     private String descricao;
 
     @ManyToOne
-    @JoinColumn(name = "tipo_tarefa_id", nullable = false)
+    @JoinColumn(name = "tipo_tarefa_id",nullable = false)
     private TipoTarefa tipoTarefa;
 
     @ManyToOne

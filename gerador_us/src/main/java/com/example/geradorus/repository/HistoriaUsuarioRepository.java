@@ -10,6 +10,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface HistoriaUsuarioRepository extends JpaRepository<HistoriaUsuario, Long> {
-    @EntityGraph(attributePaths = "tipoTarefa")
-    List<HistoriaUsuario> findAll();
+
 }
