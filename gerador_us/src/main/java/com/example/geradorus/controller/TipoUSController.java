@@ -77,13 +77,13 @@ public class TipoUSController {
         return ResponseEntity.status(HttpStatus.OK).body(tipoUSRepository.save(tiposUS));
     }
 
-    @DeleteMapping("/produtos/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteTipoUS(@PathVariable(value = "id") long id) {
-        Optional<TipoUS> produtos = tipoUSRepository.findById(id);
-        if (produtos.isEmpty()) {
+        Optional<TipoUS> tipoUS = tipoUSRepository.findById(id);
+        if (tipoUS.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(StatusCodes.US_TYPE_NOT_FOUND.getCode());
         }
-        tipoUSRepository.delete(produtos.get()); // O jpa já possui o delete
+        tipoUSRepository.delete(tipoUS.get()); // O jpa já possui o delete
         return ResponseEntity.status(HttpStatus.OK).body(StatusCodes.US_TYPE_REMOVED.getCode());
     }
 
