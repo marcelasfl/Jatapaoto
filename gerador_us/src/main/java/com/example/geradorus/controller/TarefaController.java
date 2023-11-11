@@ -26,7 +26,6 @@ public class TarefaController {
     @Autowired
     TarefaRepository tarefaRepository;
 
-
     @PostMapping("/gerar")
     public void criarGerarTarefa(@RequestBody @Valid GeraTarefaInputDTO geraTarefaInputDTO) {
         HistoriaUsuario historiausuario = historiaUsuarioRepository.findById(geraTarefaInputDTO.HistoriaUsuarioId()).get();
