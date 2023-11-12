@@ -34,7 +34,6 @@ public class TipoTarefaController {
         return ResponseEntity.status(HttpStatus.OK).body(tipoTarefaRepository.findAll());
     }
 
-
     @GetMapping("/{id}")
     public ResponseEntity<Object> getTipoTarefaById(@PathVariable int id) {
         Optional<TipoTarefa> tipoTarefaOptional = tipoTarefaRepository.findById((long) id);

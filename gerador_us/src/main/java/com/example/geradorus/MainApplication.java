@@ -10,8 +10,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
         title = "Controller View - Dev Web",
         version = "1.0",
         description = "Visualização dos controllers existentes no sistema"))
-public class GeradorUsApplication {
+public class MainApplication {
     public static void main(String[] args) {
-        SpringApplication.run(GeradorUsApplication.class, args);
+        SpringApplication.run(MainApplication.class, args);
     }
 }

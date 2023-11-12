@@ -14,10 +14,10 @@ public class TipoTarefa {
     private String descricao;
 
     @OneToMany(mappedBy = "tipoTarefa")
-    private Set<TipoUS> tipoHistoriaUsuarios;
+    private Set<TipoHU> tipoHistoriaUsuarios;
 
     @OneToOne
     @JoinColumn(name = "tipo_us_id")
-    private TipoUS tipoUS;
+    private TipoHU tipoHU;
 
 }

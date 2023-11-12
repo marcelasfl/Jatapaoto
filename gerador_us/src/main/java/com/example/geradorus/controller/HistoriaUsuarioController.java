@@ -1,20 +1,21 @@
 package com.example.geradorus.controller;
 
 import com.example.geradorus.codes.StatusCodes;
-import com.example.geradorus.dto.GeraUSInputDTO;
+import com.example.geradorus.dto.GeraHUInputDTO;
 import com.example.geradorus.dto.HistoriaUsuarioInputDTO;
-import com.example.geradorus.model.*;
+import com.example.geradorus.model.Epico;
+import com.example.geradorus.model.HistoriaUsuario;
+import com.example.geradorus.model.TipoHU;
 import com.example.geradorus.repository.EpicoRepository;
 import com.example.geradorus.repository.HistoriaUsuarioRepository;
-import com.example.geradorus.repository.TarefaRepository;
-import com.example.geradorus.repository.TipoUSRepository;
+import com.example.geradorus.repository.TipoHURepository;
+import com.example.geradorus.service.Service;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,84 +27,60 @@ public class HistoriaUsuarioController {
     @Autowired
     EpicoRepository epicoRepository;
     @Autowired
-    TipoUSRepository tipoHistoriaUsuarioRepository;
+    TipoHURepository tipoHURepository;
     @Autowired
-    HistoriaUsuarioRepository historiaUsuarioRepository;
+    HistoriaUsuarioRepository HURepository;
     @Autowired
-    TarefaRepository tarefaRepository;
+    Service service;
 
-    @GetMapping("")
-    public List<HistoriaUsuario> getAllHistoriaUsuario() {
-        return historiaUsuarioRepository.findAll();
-    }
+    @PostMapping("/gerar/hu")
+    public ResponseEntity<List<HistoriaUsuario>> gerarHU(@RequestBody GeraHUInputDTO geraHUInputDTO) {
+        Epico epico = epicoRepository.findById(geraHUInputDTO.epicoId()).get();
+        List<TipoHU> TipoHU = tipoHURepository.findAll();
 
-    @PostMapping("/gerar")
-    public ResponseEntity<List<HistoriaUsuario>> gerarHistoriaUsuario(@RequestBody GeraUSInputDTO geraUSInputDTO) {
-        Epico epico = epicoRepository.findById(geraUSInputDTO.epicoId()).get();
-        List<TipoUS> tiposHistoriaUsuario = tipoHistoriaUsuarioRepository.findAll();
-
-        String epicoDescricao = epico.getDescricao();
-        List<HistoriaUsuario> historias = new ArrayList<HistoriaUsuario>();
-        tiposHistoriaUsuario.forEach(tipo -> {
-            String entidade = epicoDescricao.substring(epicoDescricao.lastIndexOf(" ") + 1);
-            String palavra = epicoDescricao.replaceAll("(?<=\\bdesejo\\s)\\w+", tipo.getDescricao());
-            HistoriaUsuario historiaUsuario = salvarHistoriaUsuario(epico, palavra);
-            criarTarefa(historiaUsuario, tipo, entidade);
-            historias.add(historiaUsuario);
+        String descricaoEpico = epico.getDescricao();
+        List<HistoriaUsuario> hu = new ArrayList<HistoriaUsuario>();
+        TipoHU.forEach(tipo -> {
+            String entidade = descricaoEpico.substring(descricaoEpico.lastIndexOf(" ") + 1);
+            String palavra = descricaoEpico.replaceAll("(?<=\\bdesejo\\s)\\w+", tipo.getDescricao());
+            HistoriaUsuario historiaUsuario = service.salvarHistoriaUsuario(epico, palavra);
+            service.criarTarefa(historiaUsuario, tipo, entidade);
+            hu.add(historiaUsuario);
         });
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(historias);
+        return ResponseEntity.status(HttpStatus.CREATED).body(hu);
     }
 
-    private HistoriaUsuario salvarHistoriaUsuario(Epico epico, String descricao) {
-        HistoriaUsuario historiaUsuario = new HistoriaUsuario();
-
-        historiaUsuario.setCategoria(epico.getCategoria());
-        historiaUsuario.setDescricao(descricao);
-        historiaUsuario.setRelevancia(epico.getRelevancia());
-        historiaUsuario.setTitulo(epico.getTitulo());
-
-        return historiaUsuarioRepository.save(historiaUsuario);
-    }
-
-    private void criarTarefa(HistoriaUsuario historiaUsuario, TipoUS tipoHistoriaUsuario, String entidade) {
-        Tarefa tarefa = new Tarefa();
-        TipoTarefa tipoTarefa = tipoHistoriaUsuario.getTipoTarefa();
-        tarefa.setTitulo(tipoTarefa.getDescricao());
-        tarefa.setDescricao(tipoTarefa.getDescricao().concat(" de ").concat(entidade));
-        tarefa.setHistoriaUsuario(historiaUsuario);
-        tarefa.setTipoTarefa(tipoTarefa);
-
-        tarefaRepository.save(tarefa);
-    }
+    @GetMapping
+    public ResponseEntity<List<HistoriaUsuario>> listarHUS(){return ResponseEntity.status(HttpStatus.OK).body(HURepository.findAll());}
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getHUById(@PathVariable(value = "id") long id) {
-        Optional<HistoriaUsuario> hu = historiaUsuarioRepository.findById(id);
+    public ResponseEntity<Object> HUPeloId(@PathVariable(value = "id") long id) {
+        Optional<HistoriaUsuario> HUOptional = HURepository.findById(id);
 
-        return hu.<ResponseEntity<Object>>map(historiaUsuario -> ResponseEntity.status(HttpStatus.OK).body(historiaUsuario)).
+        return HUOptional.<ResponseEntity<Object>>map(historiaUsuario -> ResponseEntity.status(HttpStatus.OK).body(historiaUsuario)).
                 orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(StatusCodes.US_NOT_FOUND.getCode()));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> updateHU(@PathVariable(value = "id") long id, @RequestBody @Valid HistoriaUsuarioInputDTO historiaUsuarioInputDTO) {
-        Optional<HistoriaUsuario> hu = historiaUsuarioRepository.findById(id);
-        if (hu.isEmpty()) {return ResponseEntity.status(HttpStatus.NOT_FOUND).body(StatusCodes.US_NOT_FOUND.getCode());}
-
-        var hus = hu.get();
-        BeanUtils.copyProperties(historiaUsuarioInputDTO, hu);
-
-        return ResponseEntity.status(HttpStatus.OK).body(historiaUsuarioRepository.save(hus));
-    }
-
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteHU(@PathVariable(value = "id") long id) {
-        Optional<HistoriaUsuario> hu = historiaUsuarioRepository.findById(id);
-        if (hu.isEmpty()) {return ResponseEntity.status(HttpStatus.NOT_FOUND).body(StatusCodes.US_NOT_FOUND.getCode());}
+    public ResponseEntity<Object> deletarHU(@PathVariable(value = "id") long id) {
+        Optional<HistoriaUsuario> HUOptional = HURepository.findById(id);
+        if (HUOptional.isEmpty()) {return ResponseEntity.status(HttpStatus.NOT_FOUND).body(StatusCodes.US_NOT_FOUND.getCode());}
 
-        historiaUsuarioRepository.delete(hu.get());
+        HURepository.delete(HUOptional.get());
 
         return ResponseEntity.status(HttpStatus.OK).body(StatusCodes.US_TYPE_REMOVED.getCode());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> atualizarHU(@PathVariable(value = "id") long id, @RequestBody @Valid HistoriaUsuarioInputDTO historiaUsuarioInputDTO) {
+        Optional<HistoriaUsuario> HUOptional = HURepository.findById(id);
+        if (HUOptional.isEmpty()) {return ResponseEntity.status(HttpStatus.NOT_FOUND).body(StatusCodes.US_NOT_FOUND.getCode());}
+
+        var hu = HUOptional.get();
+        BeanUtils.copyProperties(historiaUsuarioInputDTO, hu);
+
+        return ResponseEntity.status(HttpStatus.OK).body(HURepository.save(hu));
     }
 
 }

@@ -20,7 +20,7 @@ public class EpicoController {
     EpicoRepository epicoRepository;
 
     @PostMapping
-    public ResponseEntity<Object> createEpico(@RequestBody @Valid EpicoInputDTO epicoInputDTO){
+    public ResponseEntity<Object> criarEpico(@RequestBody @Valid EpicoInputDTO epicoInputDTO){
         var epico = new Epico();
         BeanUtils.copyProperties(epicoInputDTO, epico);
 
@@ -28,10 +28,10 @@ public class EpicoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Epico>> getAllEpicos(){return ResponseEntity.status(HttpStatus.OK).body(epicoRepository.findAll());}
+    public ResponseEntity<List<Epico>> listarEpicos(){return ResponseEntity.status(HttpStatus.OK).body(epicoRepository.findAll());}
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getEpicoById(@PathVariable int id){
+    public ResponseEntity<Object> epicoPeloId(@PathVariable int id){
         Optional<Epico> epicoOptional = epicoRepository.findById((long) id);
 
         return epicoOptional.<ResponseEntity<Object>>map(epico ->
@@ -40,16 +40,17 @@ public class EpicoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteEpico(@PathVariable int id){
+    public ResponseEntity<Object> deletarEpico(@PathVariable int id){
         Optional<Epico> epicoOptional = epicoRepository.findById((long) id);
         if(epicoOptional.isEmpty()){return ResponseEntity.status(HttpStatus.NOT_FOUND).body(StatusCodes.PROJECT_NOT_FOUND);}
+
         epicoRepository.deleteById((long) id);
 
         return ResponseEntity.status(HttpStatus.OK).body(StatusCodes.PROJECT_REMOVED.getCode());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateEpico(@PathVariable int id, @RequestBody @Valid EpicoInputDTO epicoInputDTO){
+    public ResponseEntity<Object> atualizarEpico(@PathVariable int id, @RequestBody @Valid EpicoInputDTO epicoInputDTO){
         Optional<Epico> epicoOptional = epicoRepository.findById((long) id);
         if(epicoOptional.isEmpty()){return ResponseEntity.status(HttpStatus.NOT_FOUND).body(StatusCodes.PROJECT_NOT_FOUND);}
 
@@ -58,7 +59,6 @@ public class EpicoController {
         epico.setId(epicoOptional.get().getId());
 
         return ResponseEntity.status(HttpStatus.OK).body(epicoRepository.save(epico));
-
     }
 
 }
